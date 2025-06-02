@@ -33,9 +33,7 @@ class RecordFunctions {
 
     async createNewData(newData) {
 
-        if (!Array.isArray(this.data.records)) {
-            this.data.records = [];
-        };
+        if (!this._checkDataRecord()) this.data.records = [];
 
         this.data.records.push(newData);
         const jsonString = JSON.stringify(this.data, null, 2);
@@ -43,10 +41,7 @@ class RecordFunctions {
     };
 
     async updateData(id, updatedData) {
-        if (!Array.isArray(this.data.records)) {
-            console.error('No records loaded');
-            return;
-        };
+        if (!this._checkDataRecord()) return;
 
         const index = this.data.records.findIndex(record => record.id === id);
 
@@ -64,10 +59,7 @@ class RecordFunctions {
     };
 
     async deleteData(id) {
-        if (!Array.isArray(this.data.records)) {
-            console.error('No records loaded');
-            return;
-        };
+        if (!this._checkDataRecord()) return;
 
         const initialLength = this.data.records.length;
         this.data.records = this.data.records.filter(record => record.id !== id);
@@ -83,6 +75,14 @@ class RecordFunctions {
     async saveFile() {
         const jsonString = JSON.stringify(this.data, null, 2);
         await this.fs.promises.writeFile(this.storagePath, jsonString, 'utf8');
+    };
+
+    _checkDataRecord() {
+        if (!Array.isArray(this.data.records)) {
+            console.error('No records loaded');
+            return false;
+        };
+        return true;
     }
 };
 

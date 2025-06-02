@@ -20,11 +20,11 @@ await recordFunctions.loadData();
 //await recordFunctions.createNewData(newRecord);
 
 console.log('-----------------------');
-const testUpdateId = 1748881367481;
+const testUpdateId = 1748882845692;
 await recordFunctions.updateData(testUpdateId, newUpdatedRecord);
 //await recordFunctions.getData();
 
 console.log('-----------------------');
-const testDeleteId = 1748881410967;
+const testDeleteId = 1748882848744;
 await recordFunctions.deleteData(testDeleteId);
 await recordFunctions.getData();
