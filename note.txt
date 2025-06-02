@@ -1,0 +1,14 @@
+links that need to be saved with their titles 
+
+name is ideal 
+description is recommended 
+url link is required 
+
+list format that can be accessed at any time 
+
+originally based on a json document that can be shared 
+-> use json to store url data for safety 
+->> json is really good for accessing structured data while .txt is plain text
+->>, going for structured data to future proof
+-> eventually move to database with auth to handle 
+
