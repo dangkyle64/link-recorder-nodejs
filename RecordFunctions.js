@@ -27,7 +27,7 @@ class RecordFunctions {
     };
 
     async getData() {
-        console.log('Current Data:', this.data);
+        //console.log('Current Data:', this.data);
         return this.data;
     };
 
@@ -69,6 +69,7 @@ class RecordFunctions {
             return;
         };
 
+        console.log('Deleted id: ', id);
         await this.saveFile();
     };
 
