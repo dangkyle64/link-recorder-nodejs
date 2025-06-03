@@ -28,7 +28,11 @@ class PromptCLIController {
 
     async update() {
         const testUpdateId = await this.promptService.selectRecordId();
-        const updatedData = await this.promptService.getUserInput();
+        const testRecord = await this.promptService.getSelectedRecord(testUpdateId);
+
+        //console.log('Record being passed: ', testRecord);
+        const updatedData = await this.promptService.getUserInput(testRecord);
+
         const newUpdatedRecord = new this.record(updatedData);
         await this.recordFunctions.updateData(testUpdateId, newUpdatedRecord);
     };

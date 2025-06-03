@@ -1,9 +1,23 @@
 import { input } from "@inquirer/prompts";
 
-async function getUserInput() {
-    const url_name = await input({ message: 'Enter URL name:' });
-    const url_desc = await input({ message: 'Enter URL description:' });
-    const url = await input({ message: 'Enter the URL: '});
+async function getUserInput(defaults = {}) {
+
+    //console.log('defaults: ', defaults);
+
+    const url_name = await input({ 
+        message: 'Enter URL name:',
+        default: defaults.url_name,
+    });
+
+    const url_desc = await input({ 
+        message: 'Enter URL description:',
+        default: defaults.url_desc
+     });
+
+    const url = await input({ 
+        message: 'Enter the URL:',
+        default: defaults.url,
+    });
 
     const newData = {
         url_name, 

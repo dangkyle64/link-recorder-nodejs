@@ -40,8 +40,22 @@ class PromptService {
         return selectedId;
     };
 
-    async getUserInput() {
-        return await getUserInput();
+    async getSelectedRecord(id) {
+        const { records } = await recordFunctions.getData();
+
+        if (!Array.isArray(records) || records.length === 0) {
+            console.log('No records available.');
+            process.exit(0);
+        };
+
+        const selectedRecord = records.find(r => r.id === id);
+        //console.log('Selected this record: ', selectedRecord);
+
+        return selectedRecord;
+    };
+
+    async getUserInput(defaults = {}) {
+        return await getUserInput(defaults);
     };
 };
 
