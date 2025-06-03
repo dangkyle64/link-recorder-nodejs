@@ -1,25 +1,15 @@
 class RecordFunctions {
-    constructor(fs, storagePath) {
-        this.fs = fs;
-        this.storagePath = storagePath;
+    constructor(storage) {
+        this.storage = storage;
         this.data = { records: [] };
     };
 
     async loadData() {
         try {
-            if (!this.fs.existsSync(this.storagePath)) {
-                this.data = { records: [] };
-                const jsonString = JSON.stringify(this.data, null, 2);
-                await this.fs.promises.writeFile(this.storagePath, jsonString, 'utf8');
+            if (!await this.storage.exists()) {
+                await this.storage.write({ records: [] });
             };
-
-            const rawData = await this.fs.promises.readFile(this.storagePath, 'utf8');
-
-            if (rawData.trim() === '') {
-                this.data = { records: [] };
-            } else {
-                this.data = JSON.parse(rawData);
-            };
+            this.data = await this.storage.read();
         } catch(error) {
             console.error('Error loading data: ', error);
             this.data = { records: [] };
@@ -32,12 +22,10 @@ class RecordFunctions {
     };
 
     async createNewData(newData) {
-
         if (!this._checkDataRecord()) this.data.records = [];
 
         this.data.records.push(newData);
-        const jsonString = JSON.stringify(this.data, null, 2);
-        await this.fs.promises.writeFile(this.storagePath, jsonString, 'utf8');
+        await this.saveFile();
     };
 
     async updateData(id, updatedData) {
@@ -74,8 +62,7 @@ class RecordFunctions {
     };
 
     async saveFile() {
-        const jsonString = JSON.stringify(this.data, null, 2);
-        await this.fs.promises.writeFile(this.storagePath, jsonString, 'utf8');
+        await this.storage.write(this.data);
     };
 
     _checkDataRecord() {
@@ -84,7 +71,7 @@ class RecordFunctions {
             return false;
         };
         return true;
-    }
+    };
 };
 
 export default RecordFunctions;

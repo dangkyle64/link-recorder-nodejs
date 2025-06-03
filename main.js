@@ -20,7 +20,8 @@ await recordFunctions.loadData();
 
 //view all records
 async function viewLinkRecords() {
-    await recordFunctions.getData();
+    const records = await recordFunctions.getData();
+    console.log(records);
 };
 
 //select id 
