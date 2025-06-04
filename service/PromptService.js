@@ -11,6 +11,7 @@ class PromptService {
                 { name: 'Update a link record', value: 'update' },
                 { name: 'Delete a link record', value: 'delete' },
                 { name: 'View all link records', value: 'view' },
+                { name: 'View all Twitter/X records', value: 'twitter'},
                 { name: 'Exit', value: 'exit' },
             ]
         });

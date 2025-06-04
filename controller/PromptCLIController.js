@@ -14,6 +14,7 @@ class PromptCLIController {
             update: () => this.update(),
             delete: () => this.delete(),
             view: () => this.view(),
+            twitter: () => this.twitter(),
             exit: () => process.exit(0)
         };
 
@@ -42,8 +43,18 @@ class PromptCLIController {
         await this.recordFunctions.deleteData(testDeleteId);
     };
 
+    async twitter() {
+        const { records } = await this.recordFunctions.getData();
+        const search = 'https://x.com/';
+
+        //console.log('Records: ', records);
+
+        const matching = records.filter(site => site.url.startsWith(search));
+        console.log(matching);
+    };
+
     async view() {
-        const records = await this.recordFunctions.getData();
+        const { records } = await this.recordFunctions.getData();
         console.log(records);
     };
 };
