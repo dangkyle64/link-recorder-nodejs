@@ -12,6 +12,8 @@ class PromptService {
                 { name: 'Delete a link record', value: 'delete' },
                 { name: 'View all link records', value: 'view' },
                 { name: 'View all Twitter/X records', value: 'twitter'},
+                { name: 'View all Kemono records', value: 'kemono'},
+                { name: 'View all Pixiv records', value: 'pixiv'},
                 { name: 'Exit', value: 'exit' },
             ]
         });

@@ -1,8 +1,13 @@
 class PromptCLIController {
-    constructor(recordFunctions, promptService, record) {
+    constructor(recordFunctions, promptService, record, dotenv) {
         this.recordFunctions = recordFunctions;
         this.promptService = promptService;
         this.record = record;
+        
+        dotenv.config();
+        this.twitter_URL = process.env.TWITTER_URL;
+        this.kemono_URL = process.env.KEMONO_URL;
+        this.pixiv_URL = process.env.PIXIV_URL;
     };
 
     async run() {
@@ -14,7 +19,9 @@ class PromptCLIController {
             update: () => this.update(),
             delete: () => this.delete(),
             view: () => this.view(),
-            twitter: () => this.twitter(),
+            twitter: () => this.viewSite(this.twitter_URL),
+            kemono: () => this.viewSite(this.kemono_URL),
+            pixiv: () => this.viewSite(this.pixiv_URL),
             exit: () => process.exit(0)
         };
 
@@ -43,9 +50,8 @@ class PromptCLIController {
         await this.recordFunctions.deleteData(testDeleteId);
     };
 
-    async twitter() {
+    async viewSite(search) {
         const { records } = await this.recordFunctions.getData();
-        const search = 'https://x.com/';
 
         //console.log('Records: ', records);
 

@@ -106,3 +106,5 @@ dist
 *.db
 
 storage.json
+
+.env
