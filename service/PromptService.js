@@ -14,6 +14,7 @@ class PromptService {
                 { name: 'View all Twitter/X records', value: 'twitter'},
                 { name: 'View all Kemono records', value: 'kemono'},
                 { name: 'View all Pixiv records', value: 'pixiv'},
+                { name: 'View all Novelupdates records', value: 'novelupdates'},
                 { name: 'Exit', value: 'exit' },
             ]
         });

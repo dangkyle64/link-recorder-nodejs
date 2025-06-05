@@ -8,6 +8,7 @@ class PromptCLIController {
         this.twitter_URL = process.env.TWITTER_URL;
         this.kemono_URL = process.env.KEMONO_URL;
         this.pixiv_URL = process.env.PIXIV_URL;
+        this.novelupdates_URL = process.env.NOVELUPDATE_URL;
     };
 
     async run() {
@@ -22,6 +23,7 @@ class PromptCLIController {
             twitter: () => this.viewSite(this.twitter_URL),
             kemono: () => this.viewSite(this.kemono_URL),
             pixiv: () => this.viewSite(this.pixiv_URL),
+            novelupdates: () => this.viewSite(this.novelupdates_URL),
             exit: () => process.exit(0)
         };
 
@@ -41,7 +43,7 @@ class PromptCLIController {
             console.error(`Record with similar URL already exists: ${newData.url}`);
             return;
         };
-        
+
         const newRecord = new this.record(newData);
         await this.recordFunctions.createNewData(newRecord);
     };

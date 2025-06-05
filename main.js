@@ -11,6 +11,9 @@ dotenv.config();
 const promptService = new PromptService();
 const promptController = new PromptCLIController(recordFunctions, promptService, Record, dotenv);
 
-await promptController.run();
+while (true) {
+    await promptController.run();
+};
+
 
 
