@@ -24,28 +24,26 @@ class PromptCLIController {
             kemono: () => this.viewSite(this.kemono_URL),
             pixiv: () => this.viewSite(this.pixiv_URL),
             novelupdates: () => this.viewSite(this.novelupdates_URL),
-            exit: () => process.exit(0)
+            exit: () => this.exit(),
         };
 
         await actionMap[action]();
     };
 
+    exit() {
+        console.log('Exiting...');
+        process.exit(0);
+    };
+
     async create() {
         const newData = await this.promptService.getUserInput();
 
-        const { records } = await this.recordFunctions.getData();
-
-        const recordExists = records.some(record => 
-            record.url === newData.url || record.url.startsWith(newData.url)
-        );
-
-        if (recordExists) {
-            console.error(`Record with similar URL already exists: ${newData.url}`);
-            return;
-        };
+        if (!(await this._recordExists(newData))) return;
 
         const newRecord = new this.record(newData);
         await this.recordFunctions.createNewData(newRecord);
+
+        console.log(`Created the record.`);
     };
 
     async update() {
@@ -55,13 +53,21 @@ class PromptCLIController {
         //console.log('Record being passed: ', testRecord);
         const updatedData = await this.promptService.getUserInput(testRecord);
 
+        //console.log("updateData: ", updatedData);
+
+        if (!(await this._recordExists(updatedData))) return;
+
         const newUpdatedRecord = new this.record(updatedData);
         await this.recordFunctions.updateData(testUpdateId, newUpdatedRecord);
+
+        console.log(`Updated data for the current record.`);
     };
 
     async delete() {
         const testDeleteId = await this.promptService.selectRecordId();
         await this.recordFunctions.deleteData(testDeleteId);
+
+        console.log(`Deleted data for the current record.`);
     };
 
     async viewSite(search) {
@@ -76,6 +82,27 @@ class PromptCLIController {
     async view() {
         const { records } = await this.recordFunctions.getData();
         console.log(records);
+    };
+
+    async _recordExists(newData) {
+        const { records } = await this.recordFunctions.getData();
+
+        const recordExists = records.some(record => {
+            //console.log('record.id: ', record.id);
+            //console.log('newData.id: ', newData.id);
+            if (record.id === newData.id) {
+                return false;
+            };
+
+            return record.url === newData.url || record.url.startsWith(newData.url)
+        });
+
+        if (recordExists) {
+            console.error(`Record with similar URL already exists: ${newData.url}`);
+            return false;
+        };
+
+        return true;
     };
 };
 
