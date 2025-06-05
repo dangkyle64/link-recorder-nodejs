@@ -30,6 +30,18 @@ class PromptCLIController {
 
     async create() {
         const newData = await this.promptService.getUserInput();
+
+        const { records } = await this.recordFunctions.getData();
+
+        const recordExists = records.some(record => 
+            record.url === newData.url || record.url.startsWith(newData.url)
+        );
+
+        if (recordExists) {
+            console.error(`Record with similar URL already exists: ${newData.url}`);
+            return;
+        };
+        
         const newRecord = new this.record(newData);
         await this.recordFunctions.createNewData(newRecord);
     };
