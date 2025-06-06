@@ -25,10 +25,7 @@ class PromptService {
     async selectRecordId() {
         const { records } = await recordFunctions.getData();
 
-        if (!Array.isArray(records) || records.length === 0) {
-            console.log('No records available.');
-            process.exit(0);
-        };
+        if (!this._isRecordsArray(records)) process.exit(0);
 
         const selectedId = await select({
             message: 'Select a record to update/delete',
@@ -47,10 +44,7 @@ class PromptService {
     async getSelectedRecord(id) {
         const { records } = await recordFunctions.getData();
 
-        if (!Array.isArray(records) || records.length === 0) {
-            console.log('No records available.');
-            process.exit(0);
-        };
+        if (!this._isRecordsArray(records)) process.exit(0);
 
         const selectedRecord = records.find(r => r.id === id);
         //console.log('Selected this record: ', selectedRecord);
@@ -60,6 +54,15 @@ class PromptService {
 
     async getUserInput(defaults = {}) {
         return await getUserInput(defaults);
+    };
+
+    _isRecordsArray(records) {
+        if (!Array.isArray(records) || records.length === 0) {
+            console.log('No records available.');
+            return false;
+        };
+
+        return true;
     };
 };
 
