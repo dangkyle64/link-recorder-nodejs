@@ -19,6 +19,7 @@ class PromptCLIController {
             create: () => this.create(),
             update: () => this.update(),
             delete: () => this.delete(),
+            search: () => this.search(),
             view: () => this.view(),
             twitter: () => this.viewSite(this.twitter_URL),
             kemono: () => this.viewSite(this.kemono_URL),
@@ -68,6 +69,10 @@ class PromptCLIController {
         await this.recordFunctions.deleteData(testDeleteId);
 
         console.log(`Deleted data for the current record.`);
+    };
+
+    async search() {
+        await this.promptService.searchRecords();
     };
 
     async viewSite(search) {
